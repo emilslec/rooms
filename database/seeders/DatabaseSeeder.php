@@ -17,25 +17,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Game::create(['name' => 'CS2', 'year' => 2023, 'type' => 'FPS shooter']);
+        Game::create(['title' => 'CS2', 'year' => 2023, 'type' => 'FPS shooter']);
+        Game::create(['title' => 'amog', 'year' => 2019, 'type' => 'sus']);
 
         $cs = Game::orderBy('id', 'desc')->first();
         $cs->rooms()->createMany([
-            ['name' => 'Master gamers', 'description' => 'We are the best, we ball', 'level' => 999],
-            ['name' => 'bad boyus', 'description' => 'fun is what we have', 'level' => 3],
+            ['title' => 'Master gamers', 'description' => 'We are the best, we ball', 'level' => 999],
+            ['title' => 'bad boyus', 'description' => 'fun is what we have', 'level' => 3],
         ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        User::factory()->count(5)->create();
+
+        $r = Room::orderBy('id', 'desc')->first();
+        $r->participants()->createMany([
+            ['user_id' => '3'],
+            ['user_id' => '2'],
+            ['user_id' => '1']
+        ]);
+        $r->messages()->createMany([
+            ['user_id' => '1', 'content' => 'jajaja'],
+            ['user_id' => '2', 'content' => 'janka'],
+            ['user_id' => '3', 'content' => 'pecha']
         ]);
 
-        Participant::create(
-            [
-                'user_id' => User::orderBy('id', 'desc')->first()->id,
-                'room_id' => Room::orderBy('id', 'desc')->first()->id
-            ]
-        );
+
+
 
         Message::create([
             'user_id' => User::orderBy('id', 'desc')->first()->id,

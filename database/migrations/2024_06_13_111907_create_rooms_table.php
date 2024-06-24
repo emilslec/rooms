@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('game_id')->constrained()->onDelete('cascade');
-            $table->string('name', 30);
+            $table->string('title', 30);
             $table->text('description');
             $table->integer('level');
         });

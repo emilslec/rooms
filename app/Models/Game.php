@@ -10,7 +10,7 @@ class Game extends Model
     use HasFactory;
     public $timestamps = false;
 
-    protected $fillable = ['name', 'year', 'type'];
+    protected $fillable = ['title', 'year', 'type'];
     public function rooms()
     {
         return $this->hasMany(Room::class);
