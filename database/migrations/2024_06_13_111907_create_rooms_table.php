@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title', 30);
             $table->text('description');
             $table->integer('level');
+            $table->integer('limit');
         });
     }
 

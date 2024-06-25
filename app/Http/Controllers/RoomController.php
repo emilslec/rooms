@@ -40,18 +40,28 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->title == null || $request->description == null || $request->level == null || $request->game_id == null) {
+        if ($request->title == null || $request->description == null || $request->level == null || $request->game_id == null || $request->limit == null) {
             //if you deleted everyting - go back and fill it!            
             return redirect()->route('rooms.index');
         }
 
-        Room::create([
+        if ($request->limit <= 0) {
+            return redirect()->route('rooms.index');
+        }
+
+        if (!Gate::allows('create-room')) {
+            abort(403);
+        }
+
+        $s = Room::create([
             'title' => $request->title,
             'description' => $request->description,
             'level' => $request->level,
-            'game_id' => $request->game_id
+            'game_id' => $request->game_id,
+            'limit' => $request->limit,
         ]);
-        return redirect()->route('rooms.index');
+        Participant::create(['user_id' => Auth()->user()->id, 'room_id' => $s->id]);
+        return redirect()->route('rooms.show', $s->id);
     }
 
     /**
@@ -84,12 +94,8 @@ class RoomController extends Controller
             abort(403);
         }
 
-
-        if ($request->user_id == null || $request->room_id == null) {
-            return redirect()->route('rooms.index');
-        }
         Participant::create(['user_id' => auth()->user()->id, 'room_id' => $id]);
-        return redirect()->route('posts.index'); //, $id);
+        return redirect()->route('rooms.show', $id);
         //
     }
 
@@ -98,6 +104,13 @@ class RoomController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (!Gate::allows('leave-room', Room::findOrFail($id))) {
+            abort(403);
+        }
+        Participant::where('user_id', Auth()->user()->id)->where('room_id', $id)->delete();
+        if (!Participant::where('room_id', $id)->exists()) {
+            Room::findOrfail($id)->delete();
+        }
+        return redirect()->route('rooms.index');
     }
 }

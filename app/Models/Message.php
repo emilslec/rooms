@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     use HasFactory;
-    protected $fillable = ['content'];
+    protected $fillable = ['content', 'room_id', 'user_id'];
     public function room()
     {
         return $this->belongsTo(Room::class);

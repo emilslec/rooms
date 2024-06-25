@@ -10,7 +10,7 @@ class Room extends Model
     use HasFactory;
     public $timestamps = false;
 
-    protected $fillable = ['title', 'description', 'level', 'game_id'];
+    protected $fillable = ['title', 'description', 'level', 'game_id', 'limit'];
     public function game()
     {
         return $this->belongsTo(Game::class);

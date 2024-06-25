@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
 
         $cs = Game::orderBy('id', 'desc')->first();
         $cs->rooms()->createMany([
-            ['title' => 'Master gamers', 'description' => 'We are the best, we ball', 'level' => 999],
-            ['title' => 'bad boyus', 'description' => 'fun is what we have', 'level' => 3],
+            ['title' => 'Master gamers', 'description' => 'We are the best, we ball', 'level' => 999, 'limit' => 0],
+            ['title' => 'bad boyus', 'description' => 'fun is what we have', 'level' => 3, 'limit' => 4],
         ]);
 
         User::factory()->count(5)->create();

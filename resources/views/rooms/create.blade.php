@@ -25,8 +25,13 @@
         </div>
 
         <div>
-            <label for="level">level:</label>
+            <label for="limit">level:</label>
             <input type="number" id="level" name="level">
+        </div>
+
+        <div>
+            <label for="limit">limit:</label>
+            <input type="number" id="limit" name="limit">
         </div>
 
         <div>
