@@ -14,6 +14,7 @@
         <h2>{{ $room->title }}</h2>
         <p>{{ $room->description }}</p>
         <p>{{ $room->level }}</p>
+        <p>{{ $room->limit }}</p>
         <h3>pepl</h3>
         <ul>
             @foreach($users as $user)
@@ -61,7 +62,7 @@
             <button type="submit">leave rom</button>
         </form>
         @endcan
-        <h3> {{auth()->user()->id }} {{$room->id}} </h3>
+        <h3> {{auth()->user()->id }} {{Auth()->user()->latestParticipant}} </h3>
     </div>
 </body>
 

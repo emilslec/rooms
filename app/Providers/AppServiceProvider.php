@@ -20,9 +20,11 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Gate::define('join-room', function (User $user, Room $room) {
 
-            if (($user && Participant::where('user_id', $user->id)->exists()) || Participant::where('room_id', $room->id)->count() >= $room->limit) {
+        Gate::define('join-room', function (User $user, Room $room) {
+            if (($user && $user->latestParticipant && $user->latestParticipant->status == 1) ||
+                $room->participantCount() >= $room->limit
+            ) {
                 return false;
             }
             return true;
@@ -30,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('create-room', function (User $user) {
 
-            if ($user && Participant::where('user_id', $user->id)->exists()) {
+            if ($user && $user->latestParticipant && $user->latestParticipant->status == 1) {
                 return false;
             }
             return true;
@@ -38,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('leave-room', function (User $user, Room $room) {
 
-            if (Participant::where('user_id', $user->id)->where('room_id', $room->id)->exists()) {
+            if ($user->latestParticipant && $user->latestParticipant->status == 1 && $user->latestParticipant->room_id == $room->id) {
                 return true;
             }
             return false;

@@ -10,8 +10,11 @@ use App\Models\Message;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
+
 
 
 class RoomController extends Controller
@@ -22,7 +25,9 @@ class RoomController extends Controller
     public function index()
     {
         Auth::loginUsingId(5);
-        $rooms = Room::all();
+        //  App::setLocale('lv');
+        $participants = Participant::all()->where('status', 1)->pluck('room_id'); //->value('user_id');
+        $rooms = Room::all()->whereIn('id', $participants);
         return view('rooms.index', compact('rooms'));
     }
 
@@ -71,7 +76,7 @@ class RoomController extends Controller
     {
 
         $room = Room::find($id);
-        $participants = Participant::all()->where('room_id', $id)->pluck('user_id'); //->value('user_id');
+        $participants = Participant::all()->where('room_id', $id)->where('status', 1)->pluck('user_id'); //->value('user_id');
         $users = User::all()->whereIn('id', $participants);
         $messages = Message::all()->where('room_id', $id);
         return view('rooms.show', compact('room', 'users', 'messages'));
@@ -93,8 +98,10 @@ class RoomController extends Controller
         if (!Gate::allows('join-room', Room::find($id))) {
             abort(403);
         }
-
-        Participant::create(['user_id' => auth()->user()->id, 'room_id' => $id]);
+        $r = Room::find($id);
+        if ($r->participantCount() > 0) {
+            Participant::create(['user_id' => auth()->user()->id, 'room_id' => $id, 'status' => 1]);
+        }
         return redirect()->route('rooms.show', $id);
         //
     }
@@ -107,10 +114,27 @@ class RoomController extends Controller
         if (!Gate::allows('leave-room', Room::findOrFail($id))) {
             abort(403);
         }
-        Participant::where('user_id', Auth()->user()->id)->where('room_id', $id)->delete();
+        $u = User::find(Auth()->user()->id);
+        $p = $u->latestParticipant;
+        if ($p != null) {
+            $p->status = 0;
+            $p->save();
+        }
         if (!Participant::where('room_id', $id)->exists()) {
             Room::findOrfail($id)->delete();
         }
         return redirect()->route('rooms.index');
+    }
+
+    public function lang($locale)
+    {
+        $supportedLocales = ['en', 'lv', 'fr']; // Add more as needed
+
+        if (in_array($locale, $supportedLocales)) {
+            Session::put('locale', $locale);
+            app()->setLocale($locale);
+        }
+
+        return redirect()->back(); // Redirect back to the previous page
     }
 }

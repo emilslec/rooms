@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->integer('level');
             $table->integer('limit');
+            $table->timestamps();
         });
     }
 

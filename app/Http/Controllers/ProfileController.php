@@ -46,7 +46,10 @@ class ProfileController extends Controller
     {
         // Validate the request
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:1024',
+        ], [
+            'image.mimes' => 'Allowed image types: jpeg, png, jpg',
+            'image.max' => 'Max image size is 1MB'
         ]);
 
         $u = User::find(Auth()->user()->id);
@@ -60,7 +63,7 @@ class ProfileController extends Controller
         $u->path = $path;
         $u->save();
 
-        return redirect()->route('rooms.index');
+        return Redirect::to('/');
     }
     /**
      * Delete the user's account.
