@@ -38,7 +38,7 @@ class MessageController extends Controller
         if ($request->content == null || $request->id == null) {
             return redirect()->route('rooms.index');
         }
-        if (!Gate::allows('leave-room', Room::find($request->id))) {
+        if (!Gate::allows('leave-room', Room::findOrfail($request->id))) {
             abort(403);
         }
 

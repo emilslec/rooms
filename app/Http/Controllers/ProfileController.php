@@ -39,7 +39,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::to('/rooms');
     }
 
     public function store(Request $request)
@@ -63,7 +63,7 @@ class ProfileController extends Controller
         $u->path = $path;
         $u->save();
 
-        return Redirect::to('/');
+        return redirect()->back();
     }
     /**
      * Delete the user's account.

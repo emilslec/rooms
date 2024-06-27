@@ -1,68 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lv">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$room->title}}</title>
+    <title>Istaba - {{$room->title}}</title>
+    <link rel="stylesheet" href="/css/room.css">
 </head>
 
 <body>
-    <h1>Show room</h1>
-    <h2 class="no-underline"><a href="{{ route('rooms.index') }}">b ak </a></h2>
-    <div>
-        <h2>{{ $room->title }}</h2>
-        <p>{{ $room->description }}</p>
-        <p>{{ $room->level }}</p>
-        <p>{{ $room->limit }}</p>
-        <h3>pepl</h3>
-        <ul>
-            @foreach($users as $user)
-            <li>
-                <p>{{ $user->name }} // {{ $user->email }} </p>
-            </li>
-            @endforeach
-        </ul>
-        @can('leave-room', $room)
-        <h3>masage</h3>
-        <ul style="border: 2px solid #000; /* Border width, style, and color */
-    padding: 20px;">
-            @foreach($messages as $message)
-            <li>
-                <p>
-                    {{ $message->created_at->format("H:i:s") }} / {{ $message->content }} -- {{$message->user->name}}
+    <div class="content">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h1>{{$room->title}}</h1>
+                <p>{{$room->description}}</p>
+            </div>
+            <div class="header">{{ __('content.chat') }}:</div>
+            <div class="chat-box">
+                @foreach ($messages as $message)
+                <div class="message">
+                    <img src="{{ asset('storage/' . $message->user->path) }}" alt="bilde" class="profile-pic">
+                    <div class="message-content">
+                        <p><strong>{{$message->user->name}}</strong> {{$message->content}}</p>
+                        <span class="timestamp">{{ $message->created_at->format("H:i") }}</span>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <form method="POST" action="{{ route('messages.store', ['id' => $room->id]) }}">
+                @csrf
+                @method('POST')
+                <input type="text" id="content" name="content" value="" placeholder="Ievadiet ziņu..." class="input-box" required>
+                <button type="submit" class="send-button">{{ __('content.send') }}</button>
+            </form>
+        </div>
+        <div class="sidebar">
+            <div class="user-list-header">
+                <span>{{ __('content.ur') }}</span>
+                <span class="user-count">({{$room->participantCount()}} / {{$room->limit}})</span>
+            </div>
+            <div class="user-list">
+                @foreach ($users as $user)
+                <div class="user-item">
+                    <img src="{{ asset('storage/' . $user->path) }}" alt="bilde" class="profile-pic-small">
+                    <p>{{$user->name}}</p>
+                    @can ('admin')
+                    <form action="{{route('rooms.kick', ['id' => $user->id])}}">
+                        <button type="submit" class="ban-button">&times;</button>
+                    </form>
+                    @endcan
+                </div>
+                @endforeach
+            </div>
+            @can ('admin')
+            <div class="admin-buttons">
+                <form action="{{route('rooms.delete', ['id' => $room->id])}}">
+                    <button class="delete-room-button">{{ __('content.dr') }}</button>
+                </form>
 
-                    <img width=50 src="{{ asset('storage/' . $message->user->path) }}" alt="Image">
-                </p>
-            </li>
-            @endforeach
-        </ul>
-
-        <form method="POST" action="{{ route('messages.store', ['id' => $room->id]) }}">
-            @csrf
-            @method('POST')
-            <label for="title">Ziņa:</label>
-            <input type="text" id="content" name="content" value="" required>
-            <button type="submit">send</button>
-        </form>
-        @endcan
-
-        @can('join-room', $room)
-        <form method="POST" action="{{ route('rooms.update', $room->id)}}">
-            @csrf
-            @method('PUT')
-            <button type="submit">jopin rom</button>
-        </form>
-        @endcan
-
-        @can('leave-room', $room)
-        <form method="POST" action="{{ route('rooms.destroy', $room->id)}}">
-            @csrf
-            @method('DELETE')
-            <button type="submit">leave rom</button>
-        </form>
-        @endcan
-        <h3> {{auth()->user()->id }} {{Auth()->user()->latestParticipant}} </h3>
+            </div>
+            @endcan
+            @can('leave-room', $room)
+            <form method="POST" action="{{ route('rooms.destroy', $room->id)}}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="exit-button">{{ __('content.leave') }}</button>
+            </form>
+            @endcan
+        </div>
     </div>
 </body>
 

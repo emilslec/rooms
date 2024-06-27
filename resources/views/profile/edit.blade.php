@@ -1,29 +1,40 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="lv">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profils - Viltnieku Portāls</title>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+<body>
+    <div class="profile-container">
+        <h1>Profils</h1>
+        <hr class="divider">
+        <div class="profile-picture">
+            <img alt="Profila bilde" id="profile-img" src="{{asset('storage/' . Auth()->user()->path)}}">
+            <form action="{{ route('profile.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('POST')
+                <input type="file" id="profile-pic-input" name="image"><br>
+                <button type="submit" class="save-button change-pic-button">Mainīt profila bildi</button>
+            </form>
         </div>
+        <form method="post" action="{{ route('profile.update') }}" class="profile-form">
+            @csrf
+            @method('patch')
+            <div class="form-group">
+                <label for="name">Lietotājvārds:</label>
+                <input type="text" id="name" name="name" value="{{auth()->user()->name}}">
+            </div>
+            <div class="form-group">
+                <label for="email">E-pasts:</label>
+                <input type="email" id="email" name="email" value="{{auth()->user()->email}}">
+            </div>
+            <button type="submit" class="save-button">Saglabāt izmaiņas</button>
+        </form>
     </div>
-</x-app-layout>
+</body>
+
+</html>

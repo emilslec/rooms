@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('game_id')->constrained()->onDelete('cascade');
             $table->string('title', 30);
             $table->text('description');
-            $table->integer('level');
+            $table->string('level');
             $table->integer('limit');
             $table->timestamps();
         });
