@@ -20,8 +20,33 @@ body {
     align-items: center;
 }
 
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 h1 {
     margin-bottom: 10px;
+}
+
+.language-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.language-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.language-button:hover {
+    opacity: 0.9;
 }
 
 .divider {
