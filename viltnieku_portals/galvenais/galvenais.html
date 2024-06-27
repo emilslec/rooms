@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meklēt Istabu - Viltnieku Portāls</title>
+    <link rel="stylesheet" href="galvenais.css">
+</head>
+<body>
+    <div class="content">
+        <h1>Istabu saraksts</h1>
+        <hr class="divider">
+        <form class="search-form">
+            <div class="form-group">
+                <label for="game">Meklēt pēc spēles:</label>
+                <select id="game" name="game">
+                    <option value="amongus">Among Us</option>
+                    <option value="minecraft">Minecraft</option>
+                    <option value="fortnite">Fortnite</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="skill-level">Meklēt pēc prasmes:</label>
+                <input type="text" id="skill-level" name="skill-level" value="meistars">
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="search-button">Meklēt</button>
+                <button type="button" class="create-button">Izveidot</button>
+                <button type="button" class="profile-button">Profils</button>
+                <button type="button" class="logout-button">Izrakstīties</button>
+            </div>
+        </form>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>Istabas nosaukums</th>
+                    <th>Apraksts</th>
+                    <th>Spēle</th>
+                    <th>Prasmju līmenis</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="room-list">
+                <tr>
+                    <td>bad boyus</td>
+                    <td>fun is what we have</td>
+                    <td>amogus</td>
+                    <td>3</td>
+                    <td><button class="join-button">Pievienoties</button></td>
+                </tr>
+                <tr>
+                    <td>master gamers</td>
+                    <td>we game all nigght</td>
+                    <td>fortnite batel royale</td>
+                    <td>ninja blevin fortnite</td>
+                    <td><button class="join-button">Pievienoties</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izveidošana - Viltnieku Portāls</title>
+    <link rel="stylesheet" href="izveidosana.css">
+</head>
+<body>
+    <div class="content">
+        <h1>Izveidot istabu</h1>
+        <form class="create-room-form">
+            <div class="form-group">
+                <label for="game">Spēle:</label>
+                <select id="game" name="game">
+                    <option value="7days">7 days to die</option>
+                    <option value="minecraft">Minecraft</option>
+                    <option value="fortnite">Fortnite</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="skill-level">Prasmes līmenis:</label>
+                <input type="text" id="skill-level" name="skill-level" value="Klejotāju">
+            </div>
+            <div class="form-group">
+                <label for="description">Apraksts:</label>
+                <textarea id="description" name="description" rows="4">Sveiki! Meklēju divus draugus!</textarea>
+            </div>
+            <div class="form-group">
+                <label for="max-people">Maksimālais cilvēku skaits:</label>
+                <input type="number" id="max-people" name="max-people" min="1" value="4">
+            </div>
+            <button type="submit" class="create-button">Izveidot</button>
+        </form>
+    </div>
+</body>
+</html>

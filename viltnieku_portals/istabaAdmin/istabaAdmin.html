@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Admin Istaba - Viltnieku Portāls</title>
+    <link rel="stylesheet" href="istabaAdmin.css">
+</head>
+<body>
+    <div class="content">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h1>Bad Boyus</h1>
+                <p>Fun is what we have</p>
+            </div>
+            <div class="header">Sarakste:</div>
+            <div class="chat-box">
+                <div class="message">
+                    <img src="user1.png" alt="Jānītis" class="profile-pic">
+                    <div class="message-content">
+                        <p><strong>Jānītis:</strong> sveiki!</p>
+                        <span class="timestamp">10:30</span>
+                    </div>
+                </div>
+                <div class="message">
+                    <img src="user2.png" alt="Pēteris" class="profile-pic">
+                    <div class="message-content">
+                        <p><strong>Pēteris:</strong> čau! vai esat gatavi spēlēt?</p>
+                        <span class="timestamp">10:32</span>
+                    </div>
+                </div>
+                <div class="message">
+                    <img src="user3.png" alt="Modris" class="profile-pic">
+                    <div class="message-content">
+                        <p><strong>Modris:</strong> Jā, ser!</p>
+                        <span class="timestamp">10:33</span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-container">
+                <input type="text" placeholder="Ievadiet ziņu..." class="input-box">
+                <button class="send-button">Sūtīt</button>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="admin-buttons">
+                <button class="delete-room-button">Dzēst istabu</button>
+                <button class="exit-button">Iziet</button>
+            </div>
+            <div class="user-list-header">
+                <span>Lietotāji istabā</span>
+                <span class="user-count">(3/5)</span>
+            </div>
+            <div class="user-list">
+                <div class="user-item">
+                    <img src="user1.png" alt="Jānītis" class="profile-pic-small">
+                    <p>Jānītis</p>
+                    <button class="ban-button">&times;</button>
+                </div>
+                <div class="user-item">
+                    <img src="user2.png" alt="Pēteris" class="profile-pic-small">
+                    <p>Pēteris</p>
+                    <button class="ban-button">&times;</button>
+                </div>
+                <div class="user-item">
+                    <img src="user3.png" alt="Modris" class="profile-pic-small">
+                    <p>Modris</p>
+                    <button class="ban-button">&times;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
