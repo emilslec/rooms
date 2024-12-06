@@ -54,4 +54,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class);
     }
+    public function latestParticipant()
+    {
+        return $this->hasOne(Participant::class)->latestOfMany();
+    }
 }

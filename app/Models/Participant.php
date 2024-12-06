@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Participant extends Model
 {
     use HasFactory;
-    public $timestamps = false;
 
-    protected $fillable = ['room_id', 'user_id'];
+    protected $fillable = ['room_id', 'user_id', 'status'];
     public function room()
     {
         return $this->belongsTo(Room::class);
